@@ -9,6 +9,13 @@ docker run \
   -e REPORTS_ARGS \
   -e GPKG_ARGS \
   -e PG_ARGS \
+  -e PG_ENABLED \
+  -e PG_HOST \
+  -e PG_PORT \
+  -e PG_DATABASE \
+  -e PG_USER \
+  -e PG_PASSWORD \
+  -e PG_ARGS \
   --rm \
   -v $(pwd)/app:/data \
   -it fulcrumapp/sync $@

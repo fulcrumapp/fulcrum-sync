@@ -17,36 +17,34 @@ if [ -z "$FULCRUM_TOKEN" ]; then
   error "FULCRUM_TOKEN must specify the API token"
 fi
 
-S3_SYNC_ENABLED=${S3_SYNC_ENABLED:=no}
+export REPORTS_ENABLED=${REPORTS_ENABLED:=no}
+export REPORTS_CONCURRENCY=${REPORTS_CONCURRENCY:=3}
+export REPORTS_ARGS=${REPORTS_ARGS:="--file-name id"}
 
-REPORTS_ENABLED=${REPORTS_ENABLED:=no}
-REPORTS_CONCURRENCY=${REPORTS_CONCURRENCY:=3}
-REPORTS_ARGS=${REPORTS_ARGS:="--repeatables --no-recurse --file-name id"}
+export MEDIA_ENABLED=${MEDIA_ENABLED:=no}
+export MEDIA_CONCURRENCY=${MEDIA_CONCURRENCY:=3}
 
-MEDIA_ENABLED=${MEDIA_ENABLED:=no}
-MEDIA_CONCURRENCY=${MEDIA_CONCURRENCY:=3}
+export GPKG_ENABLED=${GPKG_ENABLED:=no}
+export GPKG_NAME=${GPKG_NAME:=fulcrum}
+export GPKG_ARGS=${GPKG_ARGS:="--gpkg-underscore-names --gpkg-drop false --no-gpkg-user-info --no-gpkg-joined-names"}
 
-GPKG_ENABLED=${GPKG_ENABLED:=no}
-GPKG_NAME=${GPKG_NAME:=fulcrum}
-GPKG_ARGS=${GPKG_ARGS:="--gpkg-underscore-names --gpkg-drop false --no-gpkg-user-info --no-gpkg-joined-names"}
-
-PG_ENABLED=${PG_ENABLED:=no}
-PG_HOST=${PG_HOST:=postgres}
-PG_PORT=${PG_PORT:=5432}
-PG_DATABASE=${PG_DATABASE:=fulcrum}
-PG_USER=${PG_USER:=postgres}
-PG_PASSWORD=${PG_PASSWORD:=postgres}
-PG_ARGS=${PG_ARGS:="--pg-underscore-names"}
+export PG_ENABLED=${PG_ENABLED:=no}
+export PG_HOST=${PG_HOST:=postgres}
+export PG_PORT=${PG_PORT:=5432}
+export PG_DATABASE=${PG_DATABASE:=fulcrum}
+export PG_USER=${PG_USER:=postgres}
+export PG_PASSWORD=${PG_PASSWORD:=postgres}
+export PG_ARGS=${PG_ARGS:="--pg-underscore-names"}
 
 # assign the psql-specific variables
-PGHOST=${PGHOST:=$PG_HOST}
-PGPORT=${PGPORT:=$PG_PORT}
-PGDATABASE=${PGDATABASE:=$PG_DATABASE}
-PGUSER=${PGUSER:=$PG_USER}
-PGPASSWORD=${PGPASSWORD:=$PG_PASSWORD}
+export PGHOST=${PGHOST:=$PG_HOST}
+export PGPORT=${PGPORT:=$PG_PORT}
+export PGDATABASE=${PGDATABASE:=$PG_DATABASE}
+export PGUSER=${PGUSER:=$PG_USER}
+export PGPASSWORD=${PGPASSWORD:=$PG_PASSWORD}
 
-PLUGIN_PATH=/root/.fulcrum/plugins
-PLUGIN_PATH_DISABLED=/root/.fulcrum/plugins-disabled
+export PLUGIN_PATH=/root/.fulcrum/plugins
+export PLUGIN_PATH_DISABLED=/root/.fulcrum/plugins-disabled
 
 mkdir -p $PLUGIN_PATH_DISABLED
 
@@ -66,6 +64,8 @@ disable_plugin 'reports'
 disable_plugin 'geopackage'
 
 if [[ $PG_ENABLED != "no" ]]; then
+  echo "Connecting to psql $PGHOST:$PGPORT@$PGDATABASE as $PGUSER"
+
   /usr/local/bin/wait-for-postgres
 
   psql -d postgres -c "CREATE DATABASE $PGDATABASE;"
@@ -120,8 +120,3 @@ if [[ $GPKG_ENABLED != "no" ]]; then
 
   ogr2ogr -f CSV -overwrite "/data/csv" "/data/geopackage/$GPKG_NAME.gpkg" -lco GEOMETRY=AS_XY
 fi
-
-# if [ $S3_SYNC_ENABLED == 'yes' ]
-# then
-#   /usr/local/bin/aws s3 sync /data s3://bucket-name/
-# fi
