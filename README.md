@@ -30,3 +30,14 @@ FULCRUM_PG_USER=$USER \
 FULCRUM_PG_DATABASE=snidata_sync \
 ./run
 ```
+
+### Options
+
+Setting the following environment variables will enable other features
+
+```
+FULCRUM_GPKG_ENABLED=yes|no      # default no
+FULCRUM_MEDIA_ENABLED=yes|no     # default no
+FULCRUM_REPORTS_ENABLED=yes|no   # default no
+FULCRUM_PG_ENABLED=yes|no        # default no
+```

@@ -9,6 +9,7 @@ docker run \
   -e FULCRUM_TOKEN \
   -e FULCRUM_GPKG_ENABLED \
   -e FULCRUM_REPORTS_ENABLED \
+  -e FULCRUM_MEDIA_ENABLED \
   -e FULCRUM_SYNC_ARGS \
   -e FULCRUM_REPORTS_ARGS \
   -e FULCRUM_GPKG_ARGS \
@@ -19,7 +20,6 @@ docker run \
   -e FULCRUM_PG_DATABASE \
   -e FULCRUM_PG_USER \
   -e FULCRUM_PG_PASSWORD \
-  -e FULCRUM_PG_ARGS \
   --rm \
   -v "$DATA_ROOT":/data \
   -it fulcrumapp/sync $@
