@@ -23,6 +23,7 @@ FULCRUM_PG_DATABASE=<database>
 For example, on a Mac running postgres locally, run:
 
 ```sh
+FULCRUM_ORG="<org name>" \
 FULCRUM_TOKEN="<api token>" \
 FULCRUM_PG_ENABLED=yes \
 FULCRUM_PG_HOST=docker.for.mac.host.internal \
