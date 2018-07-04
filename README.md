@@ -3,7 +3,7 @@
 ### Setup
 
 1. Install docker
-2. Get an API token for the MOFA account
+2. Get an API token for your Fulcrum account
 3. Run `FULCRUM_ORG="<org name>" FULCRUM_TOKEN="<api token>" ./run`
 4. Data will be downloaded to `./data/<org name>`
 
