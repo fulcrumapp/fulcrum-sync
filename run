@@ -1,0 +1,14 @@
+#!/bin/bash
+
+docker run \
+  -e FULCRUM_ORG="$FULCRUM_ORG" \
+  -e FULCRUM_TOKEN="$FULCRUM_TOKEN" \
+  -e GPKG_ENABLED \
+  -e REPORTS_ENABLED \
+  -e SYNC_ARGS \
+  -e REPORTS_ARGS \
+  -e GPKG_ARGS \
+  -e PG_ARGS \
+  --rm \
+  -v $(pwd)/app:/data \
+  -it fulcrumapp/sync $@

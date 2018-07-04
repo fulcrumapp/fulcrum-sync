@@ -1,0 +1,19 @@
+version: '2'
+
+services:
+  desktop:
+    build: .
+    volumes:
+      - ./scripts/start:/usr/local/bin/start
+      - ./app:/data
+    environment:
+      FULCRUM_ORG: $FULCRUM_ORG
+      FULCRUM_TOKEN: $FULCRUM_TOKEN
+      FULCRUM_DATA_PATH: /data
+      GPKG_ENABLED: 1
+      MEDIA_ENABLED:
+      REPORTS_ENABLED:
+      SYNC_ARGS:
+      REPORTS_ARGS:
+      GPKG_ARGS:
+      PG_ARGS:
