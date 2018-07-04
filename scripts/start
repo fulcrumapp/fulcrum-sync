@@ -24,6 +24,7 @@ export REPORTS_ENABLED=${REPORTS_ENABLED:=no}
 export REPORTS_ARGS=${REPORTS_ARGS:="--file-name id"}
 
 export MEDIA_ENABLED=${MEDIA_ENABLED:=no}
+export MEDIA_ARGS=${MEDIA_ARGS:=""}
 
 export GPKG_ENABLED=${GPKG_ENABLED:=no}
 export GPKG_NAME=${GPKG_NAME:="$FULCRUM_ORG"}
@@ -89,7 +90,7 @@ fulcrum sync --simple-output $PG_ARGS $SYNC_ARGS
 
 if [[ $MEDIA_ENABLED != "no" ]]; then
   echo "Processing media..."
-  fulcrum media
+  fulcrum media $MEDIA_ARGS
 fi
 
 if [[ $REPORTS_ENABLED != "no" ]]; then
