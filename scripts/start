@@ -43,7 +43,7 @@ export PGPASSWORD=${PGPASSWORD:=$FULCRUM_PG_PASSWORD}
 export PLUGIN_PATH=/root/.fulcrum/plugins
 export PLUGIN_PATH_ALL=/root/.fulcrum/plugins-all
 
-mkdir -p $PLUGIN_PATH_DISABLED
+mkdir -p $PLUGIN_PATH_ALL
 
 disable_plugin () {
   rm -f $PLUGIN_PATH/fulcrum-desktop-$1
