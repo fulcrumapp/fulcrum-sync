@@ -76,10 +76,12 @@ fi
 
 if [[ $REPORTS_ENABLED != "no" ]]; then
   enable_plugin 'reports'
+  mkdir -p /data/templates
 fi
 
 if [[ $GPKG_ENABLED != "no" ]]; then
   enable_plugin 'geopackage'
+  mkdir -p /data/geopackage
 fi
 
 mkdir -p $FULCRUM_DATA_PATH
@@ -90,12 +92,12 @@ fulcrum sync --simple-output $PG_ARGS $SYNC_ARGS
 
 if [[ $MEDIA_ENABLED != "no" ]]; then
   echo "Processing media..."
+
   fulcrum media $MEDIA_ARGS
 fi
 
 if [[ $REPORTS_ENABLED != "no" ]]; then
   echo "Processing reports..."
-  mkdir -p /data/templates
 
   if [ -f /data/templates/template.ejs ]; then
     export FULCRUM_REPORTS_TEMPLATE="/data/templates/template.ejs"
@@ -114,8 +116,6 @@ fi
 
 if [[ $GPKG_ENABLED != "no" ]]; then
   echo "Processing geopackage..."
-
-  mkdir -p /data/geopackage
 
   fulcrum geopackage $GPKG_ARGS
 
