@@ -1,21 +1,21 @@
 #!/bin/bash
 
 docker run \
-  -e FULCRUM_ORG="$FULCRUM_ORG" \
-  -e FULCRUM_TOKEN="$FULCRUM_TOKEN" \
-  -e GPKG_ENABLED \
-  -e REPORTS_ENABLED \
-  -e SYNC_ARGS \
-  -e REPORTS_ARGS \
-  -e GPKG_ARGS \
-  -e PG_ARGS \
-  -e PG_ENABLED \
-  -e PG_HOST \
-  -e PG_PORT \
-  -e PG_DATABASE \
-  -e PG_USER \
-  -e PG_PASSWORD \
-  -e PG_ARGS \
+  -e FULCRUM_ORG \
+  -e FULCRUM_TOKEN \
+  -e FULCRUM_GPKG_ENABLED \
+  -e FULCRUM_REPORTS_ENABLED \
+  -e FULCRUM_SYNC_ARGS \
+  -e FULCRUM_REPORTS_ARGS \
+  -e FULCRUM_GPKG_ARGS \
+  -e FULCRUM_PG_ARGS \
+  -e FULCRUM_PG_ENABLED \
+  -e FULCRUM_PG_HOST \
+  -e FULCRUM_PG_PORT \
+  -e FULCRUM_PG_DATABASE \
+  -e FULCRUM_PG_USER \
+  -e FULCRUM_PG_PASSWORD \
+  -e FULCRUM_PG_ARGS \
   --rm \
   -v $(pwd)/app:/data \
   -it fulcrumapp/sync $@

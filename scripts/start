@@ -20,18 +20,18 @@ if [ -z "$FULCRUM_TOKEN" ]; then
   error "FULCRUM_TOKEN must specify the API token"
 fi
 
-export REPORTS_ENABLED=${REPORTS_ENABLED:=no}
-export REPORTS_ARGS=${REPORTS_ARGS:="--file-name id"}
+export FULCRUM_REPORTS_ENABLED=${FULCRUM_REPORTS_ENABLED:=no}
+export FULCRUM_REPORTS_ARGS=${FULCRUM_REPORTS_ARGS:="--file-name id"}
 
-export MEDIA_ENABLED=${MEDIA_ENABLED:=no}
-export MEDIA_ARGS=${MEDIA_ARGS:=""}
+export FULCRUM_MEDIA_ENABLED=${FULCRUM_MEDIA_ENABLED:=no}
+export FULCRUM_MEDIA_ARGS=${FULCRUM_MEDIA_ARGS:=""}
 
-export GPKG_ENABLED=${GPKG_ENABLED:=no}
-export GPKG_NAME=${GPKG_NAME:="$FULCRUM_ORG"}
-export GPKG_ARGS=${GPKG_ARGS:="--gpkg-underscore-names --gpkg-drop false --no-gpkg-user-info --no-gpkg-joined-names"}
+export FULCRUM_GPKG_ENABLED=${FULCRUM_GPKG_ENABLED:=no}
+export FULCRUM_GPKG_NAME=${FULCRUM_GPKG_NAME:="$FULCRUM_ORG"}
+export FULCRUM_GPKG_ARGS=${FULCRUM_GPKG_ARGS:="--gpkg-underscore-names --gpkg-drop false --no-gpkg-user-info --no-gpkg-joined-names"}
 
-export PG_ENABLED=${PG_ENABLED:=no}
-export PG_ARGS=${PG_ARGS:="--pg-underscore-names"}
+export FULCRUM_PG_ENABLED=${FULCRUM_PG_ENABLED:=no}
+export FULCRUM_PG_ARGS=${FULCRUM_PG_ARGS:="--pg-underscore-names"}
 
 # assign the psql-specific variables
 export PGHOST=${PGHOST:=$FULCRUM_PG_HOST}
@@ -58,7 +58,7 @@ disable_plugin 'media'
 disable_plugin 'reports'
 disable_plugin 'geopackage'
 
-if [[ $PG_ENABLED != "no" ]]; then
+if [[ $FULCRUM_PG_ENABLED != "no" ]]; then
   echo "Connecting to psql $PGHOST:$PGPORT@$PGDATABASE as $PGUSER"
 
   /usr/local/bin/wait-for-postgres
@@ -70,16 +70,16 @@ if [[ $PG_ENABLED != "no" ]]; then
   enable_plugin 'postgres'
 fi
 
-if [[ $MEDIA_ENABLED != "no" ]]; then
+if [[ $FULCRUM_MEDIA_ENABLED != "no" ]]; then
   enable_plugin 'media'
 fi
 
-if [[ $REPORTS_ENABLED != "no" ]]; then
+if [[ $FULCRUM_REPORTS_ENABLED != "no" ]]; then
   enable_plugin 'reports'
   mkdir -p /data/templates
 fi
 
-if [[ $GPKG_ENABLED != "no" ]]; then
+if [[ $FULCRUM_GPKG_ENABLED != "no" ]]; then
   enable_plugin 'geopackage'
   mkdir -p /data/geopackage
 fi
@@ -88,15 +88,15 @@ mkdir -p $FULCRUM_DATA_PATH
 
 fulcrum setup
 
-fulcrum sync --simple-output $PG_ARGS $SYNC_ARGS
+fulcrum sync --simple-output $FULCRUM_PG_ARGS $FULCRUM_SYNC_ARGS
 
-if [[ $MEDIA_ENABLED != "no" ]]; then
+if [[ $FULCRUM_MEDIA_ENABLED != "no" ]]; then
   echo "Processing media..."
 
-  fulcrum media $MEDIA_ARGS
+  fulcrum media $FULCRUM_MEDIA_ARGS
 fi
 
-if [[ $REPORTS_ENABLED != "no" ]]; then
+if [[ $FULCRUM_REPORTS_ENABLED != "no" ]]; then
   echo "Processing reports..."
 
   if [ -f /data/templates/template.ejs ]; then
@@ -111,13 +111,13 @@ if [[ $REPORTS_ENABLED != "no" ]]; then
     export FULCRUM_REPORTS_FOOTER="/data/templates/footer.ejs"
   fi
 
-  fulcrum reports $REPORTS_ARGS
+  fulcrum reports $FULCRUM_REPORTS_ARGS
 fi
 
-if [[ $GPKG_ENABLED != "no" ]]; then
+if [[ $FULCRUM_GPKG_ENABLED != "no" ]]; then
   echo "Processing geopackage..."
 
-  fulcrum geopackage $GPKG_ARGS
+  fulcrum geopackage $FULCRUM_GPKG_ARGS
 
-  ogr2ogr -f CSV -overwrite "/data/csv" "/data/geopackage/$GPKG_NAME.gpkg" -lco GEOMETRY=AS_XY
+  ogr2ogr -f CSV -overwrite "/data/csv" "/data/geopackage/$FULCRUM_GPKG_NAME.gpkg" -lco GEOMETRY=AS_XY
 fi
