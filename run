@@ -1,5 +1,9 @@
 #!/bin/bash
 
+export DATA_ROOT=${DATA_ROOT:="$(pwd)/data/$FULCRUM_ORG"}
+
+mkdir -p "$DATA_ROOT"
+
 docker run \
   -e FULCRUM_ORG \
   -e FULCRUM_TOKEN \
@@ -17,5 +21,5 @@ docker run \
   -e FULCRUM_PG_PASSWORD \
   -e FULCRUM_PG_ARGS \
   --rm \
-  -v $(pwd)/app:/data \
+  -v "$DATA_ROOT":/data \
   -it fulcrumapp/sync $@
