@@ -1,6 +1,6 @@
 #!/bin/sh
 
-until psql postgres -c '\l'; do
+until psql postgres -c 'select 1'; do
   echo >&2 "$(date +%Y%m%dt%H%M%S) Postgres is unavailable - sleeping"
   sleep 1
 done

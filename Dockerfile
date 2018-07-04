@@ -7,7 +7,7 @@ RUN fulcrum install-plugin --name media
 RUN fulcrum install-plugin --name reports
 RUN fulcrum install-plugin --name geopackage
 
-RUN mv /root/.fulcrum/plugins /root/.fulcrum/plugins-disabled
+RUN mv /root/.fulcrum/plugins /root/.fulcrum/plugins-all
 RUN mkdir -p /root/.fulcrum/plugins
 
 COPY scripts/start /usr/local/bin/start
