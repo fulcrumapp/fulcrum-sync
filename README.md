@@ -28,7 +28,7 @@ FULCRUM_TOKEN="<api token>" \
 FULCRUM_PG_ENABLED=yes \
 FULCRUM_PG_HOST=docker.for.mac.host.internal \
 FULCRUM_PG_USER=$USER \
-FULCRUM_PG_DATABASE=snidata_sync \
+FULCRUM_PG_DATABASE=fulcrum_sync \
 ./run
 ```
 
@@ -37,8 +37,31 @@ FULCRUM_PG_DATABASE=snidata_sync \
 Setting the following environment variables will enable other features
 
 ```
-FULCRUM_GPKG_ENABLED=yes|no      # default no
-FULCRUM_MEDIA_ENABLED=yes|no     # default no
-FULCRUM_REPORTS_ENABLED=yes|no   # default no
-FULCRUM_PG_ENABLED=yes|no        # default no
+FULCRUM_GPKG_ENABLED=yes|no                     # default no
+FULCRUM_MEDIA_ENABLED=yes|no                    # default no
+FULCRUM_REPORTS_ENABLED=yes|no                  # default no
+FULCRUM_PG_ENABLED=yes|no                       # default no
+FULCRUM_S3_SYNC_ENABLED=yes|no                  # default no
+
+# options when FULCRUM_S3_SYNC_ENABLED=yes
+FULCRUM_AWS_ACCESS_KEY_ID="<key id>"            # key
+FULCRUM_AWS_SECRET_ACCESS_KEY="<secret>"        # secret
+FULCRUM_S3_SYNC_BUCKET="<bucket>"               # can also be in the form "bucket/sub-folder"
+```
+
+### Fulcrum Backup
+
+Combining everything together you can use this to create an S3 backup of all Fulcrum content:
+
+```sh
+FULCRUM_ORG="<org name>" \
+FULCRUM_TOKEN="<api token>" \
+FULCRUM_GPKG_ENABLED=yes \
+FULCRUM_MEDIA_ENABLED=yes \
+FULCRUM_REPORTS_ENABLED=yes \
+FULCRUM_S3_SYNC_ENABLED=yes \
+FULCRUM_AWS_ACCESS_KEY_ID="<key>" \
+FULCRUM_AWS_SECRET_ACCESS_KEY="<secret>" \
+FULCRUM_S3_SYNC_BUCKET="<bucket>" \
+./run
 ```
