@@ -1,12 +1,5 @@
 #!/bin/bash
 
-#set -e
-
-export FULCRUM_DATA_PATH=/data/db
-export FULCRUM_MEDIA_PATH=/data
-export FULCRUM_REPORTS_PATH=/data/reports
-export FULCRUM_GPKG_PATH=/data/geopackage
-
 error () {
   echo $1
   exit 1
@@ -32,6 +25,12 @@ export FULCRUM_GPKG_ARGS=${FULCRUM_GPKG_ARGS:="--gpkg-underscore-names --gpkg-dr
 
 export FULCRUM_PG_ENABLED=${FULCRUM_PG_ENABLED:=no}
 export FULCRUM_PG_ARGS=${FULCRUM_PG_ARGS:="--pg-underscore-names"}
+
+export FULCRUM_S3_SYNC_ENABLED=${FULCRUM_S3_SYNC_ENABLED:=no}
+
+# assign the awscli-specific variables
+export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:=$FULCRUM_AWS_ACCESS_KEY_ID}
+export AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:=$FULCRUM_AWS_SECRET_ACCESS_KEY}
 
 # assign the psql-specific variables
 export PGHOST=${PGHOST:=$FULCRUM_PG_HOST}
@@ -120,4 +119,22 @@ if [[ $FULCRUM_GPKG_ENABLED != "no" ]]; then
   fulcrum geopackage $FULCRUM_GPKG_ARGS
 
   ogr2ogr -f CSV -overwrite "/data/csv" "/data/geopackage/$FULCRUM_GPKG_NAME.gpkg" -lco GEOMETRY=AS_XY
+fi
+
+if [[ $FULCRUM_S3_SYNC_ENABLED != "no" ]]; then
+  echo "Processing s3 sync..."
+
+  if [ -z "$AWS_ACCESS_KEY_ID" ]; then
+    error "AWS_ACCESS_KEY_ID required for s3 sync"
+  fi
+
+  if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
+    error "AWS_SECRET_ACCESS_KEY required for s3 sync"
+  fi
+
+  if [ -z "$FULCRUM_S3_SYNC_BUCKET" ]; then
+    error "FULCRUM_S3_SYNC_BUCKET required for s3 sync"
+  fi
+
+  /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET
 fi
