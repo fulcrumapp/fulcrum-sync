@@ -20,6 +20,24 @@ FULCRUM_PG_PASSWORD=<password>
 FULCRUM_PG_DATABASE=<database>
 ```
 
+If you want MSSQL support, you will need some additional environment variables:
+
+```sh
+FULCRUM_MSSQL_ENABLED=yes
+FULCRUM_MSSQL_HOST=<host>
+FULCRUM_MSSQL_PORT=<port>
+FULCRUM_MSSQL_USER=<user>
+FULCRUM_MSSQL_PASSWORD=<password>
+FULCRUM_MSSQL_DATABASE=<database>
+```
+
+Or as a connection string:
+
+```sh
+FULCRUM_MSSQL_ENABLED=yes
+FULCRUM_MSSQL_CONNECTION_STRING=mssql://username:password@hostname/database
+```
+
 For example, on a Mac running postgres locally, run:
 
 ```sh
@@ -41,6 +59,7 @@ FULCRUM_GPKG_ENABLED=yes|no                     # default no
 FULCRUM_MEDIA_ENABLED=yes|no                    # default no
 FULCRUM_REPORTS_ENABLED=yes|no                  # default no
 FULCRUM_PG_ENABLED=yes|no                       # default no
+FULCRUM_MSSQL_ENABLED=yes|no                    # default no
 FULCRUM_S3_SYNC_ENABLED=yes|no                  # default no
 
 # options when FULCRUM_S3_SYNC_ENABLED=yes

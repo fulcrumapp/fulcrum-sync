@@ -8,6 +8,7 @@ ENV FULCRUM_REPORTS_PATH '/data/reports'
 ENV FULCRUM_GPKG_PATH '/data/geopackage'
 
 RUN fulcrum install-plugin --name postgres
+RUN fulcrum install-plugin --name mssql
 RUN fulcrum install-plugin --name media
 RUN fulcrum install-plugin --name reports
 RUN fulcrum install-plugin --name geopackage
