@@ -26,8 +26,8 @@ export FULCRUM_GPKG_ARGS=${FULCRUM_GPKG_ARGS:="--gpkg-underscore-names --gpkg-dr
 export FULCRUM_PG_ENABLED=${FULCRUM_PG_ENABLED:=no}
 export FULCRUM_PG_ARGS=${FULCRUM_PG_ARGS:="--pg-underscore-names"}
 
-export FULCRUM_MSSQL_ENABLED=${FULCRUM_MSSQL_ENABLED:=no}
-export FULCRUM_MSSQL_ARGS=${FULCRUM_MSSQL_ARGS:="--pg-underscore-names"}
+export FULCRUM_MS_ENABLED=${FULCRUM_MS_ENABLED:=no}
+export FULCRUM_MS_ARGS=${FULCRUM_MS_ARGS:="--ms-underscore-names"}
 
 export FULCRUM_S3_SYNC_ENABLED=${FULCRUM_S3_SYNC_ENABLED:=no}
 
@@ -73,7 +73,7 @@ if [[ $FULCRUM_PG_ENABLED != "no" ]]; then
   enable_plugin 'postgres'
 fi
 
-if [[ $FULCRUM_MSSQL_ENABLED != "no" ]]; then
+if [[ $FULCRUM_MS_ENABLED != "no" ]]; then
   enable_plugin 'mssql'
 fi
 
@@ -95,7 +95,7 @@ mkdir -p $FULCRUM_DATA_PATH
 
 fulcrum setup
 
-fulcrum sync --simple-output $FULCRUM_PG_ARGS $FULCRUM_MSSQL_ARGS $FULCRUM_SYNC_ARGS
+fulcrum sync --simple-output $FULCRUM_PG_ARGS $FULCRUM_MS_ARGS $FULCRUM_SYNC_ARGS
 
 if [[ $FULCRUM_MEDIA_ENABLED != "no" ]]; then
   echo "Processing media..."
