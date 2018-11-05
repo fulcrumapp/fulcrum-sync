@@ -24,10 +24,10 @@ export FULCRUM_GPKG_NAME=${FULCRUM_GPKG_NAME:="$FULCRUM_ORG"}
 export FULCRUM_GPKG_ARGS=${FULCRUM_GPKG_ARGS:="--gpkg-underscore-names --gpkg-drop false --no-gpkg-user-info --no-gpkg-joined-names"}
 
 export FULCRUM_PG_ENABLED=${FULCRUM_PG_ENABLED:=no}
-export FULCRUM_PG_ARGS=${FULCRUM_PG_ARGS:="--pg-underscore-names"}
+export FULCRUM_PG_ARGS=${FULCRUM_PG_ARGS:=""}
 
 export FULCRUM_MSSQL_ENABLED=${FULCRUM_MSSQL_ENABLED:=no}
-export FULCRUM_MSSQL_ARGS=${FULCRUM_MSSQL_ARGS:="--mssql-underscore-names"}
+export FULCRUM_MSSQL_ARGS=${FULCRUM_MSSQL_ARGS:=""}
 
 export FULCRUM_S3_SYNC_ENABLED=${FULCRUM_S3_SYNC_ENABLED:=no}
 
