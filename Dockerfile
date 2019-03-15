@@ -3,6 +3,7 @@ FROM fulcrumapp/desktop
 ENV DATA_PATH '/data'
 
 ENV FULCRUM_DATA_PATH '/data/db'
+ENV FULCRUM_LOG_PATH '/data/log'
 ENV FULCRUM_MEDIA_PATH '/data'
 ENV FULCRUM_REPORTS_PATH '/data/reports'
 ENV FULCRUM_GPKG_PATH '/data/geopackage'
