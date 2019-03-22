@@ -134,14 +134,6 @@ fi
 if [[ $FULCRUM_S3_SYNC_ENABLED != "no" ]]; then
   echo "Processing s3 sync..."
 
-  if [ -z "$AWS_ACCESS_KEY_ID" ]; then
-    error "AWS_ACCESS_KEY_ID required for s3 sync"
-  fi
-
-  if [ -z "$AWS_SECRET_ACCESS_KEY" ]; then
-    error "AWS_SECRET_ACCESS_KEY required for s3 sync"
-  fi
-
   if [ -z "$FULCRUM_S3_SYNC_BUCKET" ]; then
     error "FULCRUM_S3_SYNC_BUCKET required for s3 sync"
   fi
