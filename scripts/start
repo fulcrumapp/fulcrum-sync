@@ -126,6 +126,8 @@ if [[ $FULCRUM_GPKG_ENABLED != "no" ]]; then
 
   fulcrum geopackage $FULCRUM_GPKG_ARGS
 
+  rm -rf /data/csv
+
   ogr2ogr -f CSV -overwrite "/data/csv" "/data/geopackage/$FULCRUM_GPKG_NAME.gpkg" -lco GEOMETRY=AS_XY
 fi
 
