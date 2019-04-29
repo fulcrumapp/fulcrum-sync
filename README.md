@@ -84,3 +84,5 @@ FULCRUM_AWS_SECRET_ACCESS_KEY="<secret>" \
 FULCRUM_S3_SYNC_BUCKET="<bucket>" \
 ./run
 ```
+
+
