@@ -30,6 +30,7 @@ export FULCRUM_MSSQL_ENABLED=${FULCRUM_MSSQL_ENABLED:=no}
 export FULCRUM_MSSQL_ARGS=${FULCRUM_MSSQL_ARGS:=""}
 
 export FULCRUM_S3_SYNC_ENABLED=${FULCRUM_S3_SYNC_ENABLED:=no}
+export FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED=${FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED:=no}
 
 # assign the awscli-specific variables
 export AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:=$FULCRUM_AWS_ACCESS_KEY_ID}
@@ -146,5 +147,10 @@ if [[ $FULCRUM_S3_SYNC_ENABLED != "no" ]]; then
     error "FULCRUM_S3_SYNC_BUCKET required for s3 sync"
   fi
 
-  /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET
+  if [[ $FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED != "no" ]]; then
+      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET
+  else
+      echo "S3 Destination Cleanup is enabled... Deleting files which dont exist locally"
+      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET --delete
+  fi
 fi

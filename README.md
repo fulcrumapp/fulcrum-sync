@@ -66,6 +66,7 @@ FULCRUM_S3_SYNC_ENABLED=yes|no                  # default no
 FULCRUM_AWS_ACCESS_KEY_ID="<key id>"            # key
 FULCRUM_AWS_SECRET_ACCESS_KEY="<secret>"        # secret
 FULCRUM_S3_SYNC_BUCKET="<bucket>"               # can also be in the form "bucket/sub-folder"
+FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED=yes # This option will delete files from S3 which dont exist locally... Be careful.
 ```
 
 ### Fulcrum Backup
