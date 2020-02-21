@@ -147,10 +147,10 @@ if [[ $FULCRUM_S3_SYNC_ENABLED != "no" ]]; then
     error "FULCRUM_S3_SYNC_BUCKET required for s3 sync"
   fi
 
-  if [[ $FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED != "no" ]]; then
-      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET
-  else
+  if [[ $FULCRUM_S3_SYNC_DESTINATION_CLEANUP_ENABLED == "yes" ]]; then
       echo "S3 Destination Cleanup is enabled... Deleting files which dont exist locally"
-      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET --delete
+      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET --delete      
+  else
+      /usr/local/bin/aws s3 sync /data s3://$FULCRUM_S3_SYNC_BUCKET
   fi
 fi
